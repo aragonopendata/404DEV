@@ -1,0 +1,109 @@
+@primaryColor: #76a1b8;
+@secondaryColor: #3b515c;
+@primaryWordColor: white;
+@desktopMinResolution: 1200px;
+@tabletMaxResolution: 1199px;
+@tabletMinResolution: 768px;
+@phoneMinResolution: 767px;
+body.aragomo {
+	header {
+		background-color: @primaryColor;
+		color: @primaryWordColor;
+		h1 {
+			background-image: url("img/logo_mid.png");
+			background-repeat: no-repeat;
+			background-size: contain;
+			margin: 0 20px 0 120px;
+			padding: 25px 0 0 120px;
+			min-height: 100px;
+			small , span {
+				color: @secondaryColor;
+			}
+
+			.buscador {
+				text-align: right;
+				padding-right: 10px;
+				@media (max-width: @tabletMaxResolution) {
+					max-width: 290px
+				}
+			}
+		}
+
+		.menu-bar {
+			ul {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				border-top: 2px solid @primaryWordColor;
+				overflow: hidden;
+				> li {
+					display: inline-block;
+					text-align: center;
+					font-weight: bold;
+					float: left;
+					a {
+						display: block;
+						padding: 5px;
+						color: @primaryWordColor;
+						min-width: 150px;
+						&:hover {
+							text-decoration: none;
+							background-color: @secondaryColor;
+						}
+					}
+
+					@media (min-width: @desktopMinResolution) {
+						border-left: 2px solid @primaryWordColor;
+						&:FIRST-CHILD {
+							margin-left: 120px;
+						}
+
+						&:LAST-CHILD {
+							a {
+								border-right: 2px solid @primaryWordColor;
+							}
+						}
+					}
+
+					@media (max-width: @tabletMaxResolution) and (min-width: @tabletMinResolution) {
+						border-left: 2px solid @primaryWordColor;
+						min-width: 33.3%;
+						&:LAST-CHILD {
+							a {
+								border-right: 2px solid @primaryWordColor;
+								border-bottom: none;
+							}
+						}
+
+						a {
+							border-bottom: 2px solid @primaryWordColor;
+						}
+					}
+
+					@media (max-width: @phoneMinResolution) {
+						min-width: 100%;
+						border-bottom: 2px solid @primaryWordColor;
+					}
+				}
+			}
+		}
+	}
+
+	.body-content {
+	}
+
+	footer {
+		height: 20px;
+		background-color: @primaryColor;
+		text-align: right;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		font-weight: bold;
+		color: @primaryWordColor;
+		p {
+			margin: 0 20px;
+		}
+	}
+}
+
