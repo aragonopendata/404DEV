@@ -7,7 +7,6 @@ use JSON::XS;
 use Rest::Places;
 use Rest::Social;
 use Data::Dumper;
-use Parallel::ForkManager;
 
 
 our $VERSION = '0.1';
