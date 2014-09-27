@@ -179,15 +179,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </head>
 
 <body class="aragomo">
-	<?php include 'includes/header.html';?>
 	
-	<div class="body-content" id="map-canvas">&nbsp;</div>
+	<div id="map-canvas" class="test"></div>
 	
 	<?php include 'includes/modal.html';?>
 	
 	<?php include 'includes/modal2.html';?>
-	
-	<?php include 'includes/footer.html';?>
 </body>
 
 </html>
