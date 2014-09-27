@@ -15,6 +15,7 @@ any ['post','get'] => '/search/' => sub {
 	my $coordinates = {	lat =>params->{lat}, lng => params->{lng} };
     my $distance = params->{distance};
     my $name = params->{name} || '';
+    my $maxPage = params->{nPages} || '5';
 
     my $placesApi = Rest::Places->new();
     $placesApi->init();
@@ -26,7 +27,7 @@ any ['post','get'] => '/search/' => sub {
     foreach my $type (keys %{$types}){
     	my $socialApi = Rest::Social->new({type => $type});
     	$socialApi->init();
-    	$results->{$type} = $socialApi->process($coordinates,$distance/1000,$name);
+    	$results->{$type} = $socialApi->process($coordinates, $distance/1000, $maxPage ,$name);
     }
 
     return JSON::XS->new->encode($results);

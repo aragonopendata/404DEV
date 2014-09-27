@@ -10,8 +10,8 @@ use JSON::XS;
 sub new {
 	my ( $class, $params ) = @_;
     my $objectRef = {
-        END_POINT => 'http://opendata.aragon.es/socialdata/data?locality=name&distance=distancia&source='.$params->{type},
-        END_POINT_CORDS => 'http://opendata.aragon.es/socialdata/data?center=lat,lng&distance=distancia&source='.$params->{type},
+        END_POINT => 'http://opendata.aragon.es/socialdata/data?locality=name&distance=distancia&source='.$params->{type}.'&page=',
+        END_POINT_CORDS => 'http://opendata.aragon.es/socialdata/data?center=lat,lng&distance=distancia&source='.$params->{type}.'&page=',
         TYPE => $params->{type}
     };
     bless $objectRef, $class;
@@ -25,33 +25,37 @@ sub init {
 }
 
 sub process {
-	my ($self, $coordinates , $distance ,$name ) = @_;
-	$self->_prepareQUery($coordinates, $distance, $name);
-	my $response = $self->{MECHANIZE}->get($self->{QUERY});
+	my ($self, $coordinates , $distance , $maxPage ,$name ) = @_;
 
-	my $jsonString = $response->content;
+	my $page = 1;
 	my $total = ();
-	my $json = {}; 
-	if($self->{TYPE} ne 'twitter'){
-		eval { $json = JSON::XS->new->utf8->decode($jsonString)};
-	}else{
-		eval { $json = JSON::XS->new->decode($jsonString)};
-	}
-	if($@){
-		# Error block
-		print "$@";
-	}else{
-		$json = $json->{results} if ref $json ne 'ARRAY';	
-		foreach my $result (@{$json}){
-			push(@$total,$self->_parseResult($result));
+	while($page < $maxPage){
+		$self->_prepareQUery($coordinates, $distance, $page , $name);
+		my $response = $self->{MECHANIZE}->get($self->{QUERY});
+		my $jsonString = $response->content;
+		my $json = {}; 
+		if($self->{TYPE} ne 'twitter'){
+			eval { $json = JSON::XS->new->utf8->decode($jsonString)};
+		}else{
+			eval { $json = JSON::XS->new->decode($jsonString)};
 		}
+		if($@){
+			# Error block
+			print "$@";
+		}else{
+			$json = $json->{results} if ref $json ne 'ARRAY';	
+			foreach my $result (@{$json}){
+				push(@$total,$self->_parseResult($result));
+			}
+		}
+		$page ++;
 	}
 
 	return $total;
 }
 
 sub _prepareQUery {
-	my ($self, $coordinates, $distance , $name) = @_;
+	my ($self, $coordinates, $distance , $page, $name) = @_;
 	if (!$name){
 		$self->{END_POINT_CORDS} =~ s/lat/$coordinates->{lat}/;
 		$self->{END_POINT_CORDS} =~ s/lng/$coordinates->{lng}/;
@@ -62,6 +66,7 @@ sub _prepareQUery {
 		$self->{END_POINT} =~ s/distancia/$distance/;
 		$self->{QUERY} = $self->{END_POINT};
 	}
+	$self->{QUERY} =~ s/&page=.*/&page=$page/i;
 	print $self->{QUERY}."\n";
 }
 

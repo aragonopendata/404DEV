@@ -6,6 +6,7 @@ use warnings;
 use WWW::Mechanize;
 use Data::Dumper;
 use JSON qw/from_json/;
+use Encode;
 
 # AIzaSyC09vRj3Tls8TF8myHaEgmSNMZaQ3Ypu8M
 # AIzaSyAjQ-GAazK7FWjzCT1o92i77q6ZLlOzIxU
@@ -51,6 +52,7 @@ sub _parseResult
 {
 	my ($self, $result) = @_;
 	my $name = $result->{result}->{name};
+	$name = decode('iso-8859-1',$name);
 
 	return {name => $name, lat => $result->{result}->{geometry}->{location}->{lat}, lng => $result->{result}->{geometry}->{location}->{lng}};
 }
