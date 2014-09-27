@@ -2,11 +2,11 @@
 require_once("includes/functions.php");
 if(isset($_GET['lat'])){
 	$initialPoint = array("lat"=>$_GET['lat'], "lng"=>$_GET['lng']);
-	$arr_data = selectData($initialPoint, isset($_GET['dist'])?$_GET['dist']:5, 10);
-}else{
+	$arr_data = selectData($initialPoint, isset($_GET['dist'])?$_GET['dist']:5, 15);
+}/*else{
 	$initialPoint = array("lat"=>41.64225, "lng"=>-0.912755);
 	$arr_data = selectData($initialPoint, isset($_GET['dist'])?$_GET['dist']:5, 10);
-}
+}*/
 ?>
 
 <!DOCTYPE HTML>
@@ -38,13 +38,13 @@ if(isset($_GET['lat'])){
 <script src="js/aragomo.js"></script>
 	
 <script>
-var twitter = <?php echo $arr_data['twitter'] ?>;
-var instagram = <?php echo $arr_data['instagram'] ?>;
-var flickr = <?php echo $arr_data['flickr'] ?>;
-var places = <?php echo $arr_data['places'] ?>;
+var twitter = <?php echo isset($arr_data['twitter'])?$arr_data['twitter']:"[]" ?>;
+var instagram = <?php echo isset($arr_data['instagram'])?$arr_data['instagram']:"[]" ?>;
+var flickr = <?php echo isset($arr_data['flickr'])?$arr_data['flickr']:"[]" ?>;
+var places = <?php echo isset($arr_data['places'])?$arr_data['places']:"[]" ?>;
 $data_modal = '';
 function initialize() {
-	var myLatlngCenter = new google.maps.LatLng(<?php echo $initialPoint['lat'].", ".$initialPoint['lng']?>);
+	var myLatlngCenter = new google.maps.LatLng(<?php echo (isset($initialPoint['lat'])?$initialPoint['lat']:0).", ".(isset($initialPoint['lng'])?$initialPoint['lng']:0)?>);
 	var mapOptions = {
 		zoom: 14,
 		center: myLatlngCenter

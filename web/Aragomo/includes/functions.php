@@ -174,7 +174,7 @@ function points_proximity($arr_points){
 
 function selectData($initialPoint, $dist, $pages){
 	$arr_data = array();
-	
+	if(!isset($_GET['debug'])){
 	$url = "http://155.210.71.103:2000/search/?lat=".$initialPoint['lat']."&lng=".$initialPoint['lng']."&distance=".($dist*1000)."&nPages=".$pages;
 
 	//open connection
@@ -190,7 +190,14 @@ function selectData($initialPoint, $dist, $pages){
 
 	//close connection
 	curl_close($ch);
-	
+	/*
+	$myfile = fopen("ta.json", "w");
+	fwrite($myfile, $result);
+	fclose($myfile);*/
+	$arrData = json_decode($result);
+	}else{
+		$result = file_get_contents("ta.json");
+	}
 	//$result = file_get_contents("ta.json");
 	$arrData = json_decode($result);
 	
