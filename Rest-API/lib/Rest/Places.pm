@@ -124,7 +124,6 @@ sub _getPlaceInfo {
 sub _prepareQuery {
 	my ($self,$lat,$lng,$rad) = @_;
 	$self->{QUERY_SEARCH} = "https://maps.googleapis.com/maps/api/place/search/json?location=$lat,$lng&radius=$rad&key=".$self->{API_KEY}."&sensor=false";
-	print $self->{QUERY_SEARCH}."\n";
 }
 
 sub _nextPage {

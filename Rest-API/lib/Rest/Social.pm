@@ -67,7 +67,6 @@ sub _prepareQUery {
 		$self->{QUERY} = $self->{END_POINT};
 	}
 	$self->{QUERY} =~ s/&page=.*/&page=$page/i;
-	print $self->{QUERY}."\n";
 }
 
 sub _parseResult {
