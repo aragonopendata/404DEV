@@ -19,8 +19,7 @@ any ['post','get'] => '/search/' => sub {
 
     my $placesApi = Rest::Places->new();
     $placesApi->init();
-    #my $results->{places} = $placesApi->search($coordinates,$distance,$name);
-    my $results = {};
+    my $results->{places} = $placesApi->search($coordinates,$distance,$name);
 
     # API-SOCIAL-DATA BLOCK
     my $types = {twitter => 1, instagram => 1, flickr => 1};
@@ -31,7 +30,7 @@ any ['post','get'] => '/search/' => sub {
     	$results->{$type} = $socialApi->process($coordinates, $distance/1000, $maxPage ,$name);
     }
 
-    return JSON::XS->new->encode($results);
+    return JSON::XS->new->utf8->encode($results);
 };
 
 
