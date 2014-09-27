@@ -6,6 +6,8 @@ use warnings;
 use WWW::Mechanize;
 use Data::Dumper;
 use JSON::XS;
+use Encode::Detect::Detector;
+use Encode;
 
 sub new {
 	my ( $class, $params ) = @_;
@@ -80,16 +82,24 @@ sub _parseResult {
 	$result->{thumbnail} =~ s/"//g if $result->{thumbnail};
 	$result->{url} =~ s/"//g if $result->{url};
 
-	my $description = $result->{description};
 	my $hashtags = [];
-	while($description =~ /(#[a-zA-Z0-9-_]+)/){
-		my $word = $1;
-		$description =~ s/$word//;
-		push(@$hashtags,$word);
+	if($description){
+		while($description =~ /(#[a-zA-Z0-9-_]+)/){
+			my $word = $1;
+			$description =~ s/$word//;
+			push(@$hashtags,$word);
+		}
+	}
+
+	foreach my $attr (keys %{$result}){
+		if($result->{$_}){
+			my $encoding = Encode::Detect::Detector::detect($result->{$_});
+			print $_."\n";
+			$result->{$_} = decode($_,$encoding);
+		}
 	}
 
 	$result->{description} = '' if $self->{TYPE} eq 'flickr';
-
 	return {author => $result->{author}, lat => $result->{lat}, lng => $result->{lng}, description => $result->{description}, url => $result->{url}, thumbnail => $result->{thumbnail}, published_on => $result->{published_on} , hashtags => $hashtags};
 }
 
