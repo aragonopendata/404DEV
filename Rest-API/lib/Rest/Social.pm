@@ -80,7 +80,6 @@ sub _parseResult {
 	$result->{thumbnail} =~ s/"//g if $result->{thumbnail};
 	$result->{url} =~ s/"//g if $result->{url};
 
-	my $description = $result->{description};
 	my $hashtags = [];
 	if($description){
 		while($description =~ /(#[a-zA-Z0-9-_]+)/){
