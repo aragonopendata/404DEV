@@ -2,11 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.dev404.aragomo.MainActivity" >
+    
+<!-- 
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.dev404.aragomo.MainActivity" >
+
+ -->    
+    
 	<RelativeLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
@@ -26,13 +31,139 @@
 			/>
 		    	  
 		</RelativeLayout>
+		
+
+			
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/containerBarra"
+            android:layout_marginRight="16dp"   
+            >
+            
+	            <LinearLayout
+	                android:id="@+id/refresh_match_layout"
+	                android:layout_width="320dp"
+	                android:layout_height="wrap_content"
+	                android:layout_margin="5dp"
+	                android:background="@drawable/background_view_rounded_single"
+	                android:orientation="vertical"
+	                android:visibility="visible" >
+	
+	
+	
+	                <SeekBar
+	                    android:id="@+id/volume_bar"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginRight="10dp"
+	                    android:progress="0"
+	                    android:max="5"
+	                    android:progressDrawable="@drawable/progressbar"
+	                    android:secondaryProgress="0" />
+	
+	               <LinearLayout
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:orientation="horizontal"
+	                    android:visibility="visible"
+	                    android:weightSum="12" >
+	
+	                    <!-- android:layout_margin="10dp" -->
+	
+	                    <TextView
+	                        android:layout_width="0dp"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="2"
+	                        android:gravity="center_horizontal"
+	                        android:text="1"
+	                        android:textColor="#3b515c"
+	                        android:textStyle="bold" />
+	
+	                    <TextView
+	                        android:layout_width="0dp"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="2"
+	                        android:gravity="center_horizontal"
+	                        android:text="2"
+	                        android:textColor="#3b515c"
+	                        android:textStyle="bold" />
+	
+	                    <TextView
+	                        android:layout_width="0dp"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="2"
+	                        android:gravity="center_horizontal"
+	                        android:text="3"
+	                        android:textColor="#3b515c"
+	                        android:textStyle="bold" />
+	
+	                    <TextView
+	                        android:layout_width="0dp"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="2"
+	                        android:gravity="center_horizontal"
+	                        android:text="4"
+	                        android:textColor="#3b515c"
+	                        android:textStyle="bold" />
+	
+	                    <TextView
+	                        android:layout_width="0dp"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="2"
+	                        android:gravity="center_horizontal"
+	                        android:text="5"
+	                        android:textColor="#3b515c"
+	                        android:textStyle="bold" />
+	
+                  	     <TextView
+	                        android:layout_width="0dp"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="2"
+	                        android:gravity="center_horizontal"
+	                        android:text="6"
+	                        android:textColor="#3b515c"
+	                        android:textStyle="bold" />
+	                    
+	
+	
+	                    </LinearLayout>
+	            </LinearLayout>
+
+        </RelativeLayout>	    
+
+        <RelativeLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/containerButton" 
+            android:layout_alignParentRight="true"   
+            android:layout_alignBaseline="@+id/containerButton"                       
+            >
+        
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:text="GO"
+            >
+            
+        </Button>
+        
+        </RelativeLayout>
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/coordenates" 
 	        android:id="@+id/gps"
+	        android:background="#FFFFFF"
+	        android:paddingLeft="8dp"
+	        android:paddingRight="8dp"
+	        android:paddingTop="2dp"
+	        android:paddingBottom="2dp"
 	        android:layout_alignParentBottom="true"
 	        android:layout_alignParentRight="true"
+	        android:layout_marginBottom="8dp"
+	        android:layout_marginRight="8dp"
 	        />				    
 	</RelativeLayout>
 

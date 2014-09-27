@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the theme applied to the application or activity -->
+    <style name="CustomActionBarTheme"
+           parent="@style/Theme.AppCompat">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>   
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar"
+           parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">#76a1b8</item>
+    	<item name="android:titleTextStyle">@style/CustomActionBarTheme.ActionBar.TitleTextStyle</item>
+        
+    </style>
+    <!-- 0e648b -->
+    
+    
+	  <style name="CustomActionBarTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+	    <item name="android:textColor">#ffffff</item>
+	  </style>    
+    
+    
+</resources>
