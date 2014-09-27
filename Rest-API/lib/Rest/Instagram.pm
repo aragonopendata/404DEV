@@ -1,33 +1,14 @@
 package Rest::Instagram;
 
+use base qw/Rest::Social/;
+
 sub new {
-	my ( $class, $params ) = @_;
-    my $objectRef = {
-        END_POINT => 'http://opendata.aragon.es/socialdata/data?locality=Jaca&distance=1&source=flickr'
-    };
-    bless $objectRef, $class;
-    return $objectRef;
-}
-
-sub init {
-	my $self = shift;
-	$self->{MECHANIZE} = WWW::Mechanize->new(autocheck => 0);
-
+	my ($class, $params) = @_;
+	my $self = $class->SUPER::new($params);
 	return $self;
 }
 
-sub searchByName {
-	my ($self, $lng, $lat , $distance ,$name );
-}
-
-sub searchByCords {
-	
-}
-
 sub _parseResult {
-
-}
-
-sub _prepareQUery {
-
+	my ($self, $result) = @_;
+	return {author => $result->{author}, lat => $result->{lat}, lng => $result->{lng}, description => $result->{description}, url => $result->{url}, thumbnail => $result->{thumbnail}, published_on => $result->{published_on} };
 }

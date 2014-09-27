@@ -7,10 +7,14 @@ use WWW::Mechanize;
 use Data::Dumper;
 use JSON qw/from_json/;
 
+# AIzaSyC09vRj3Tls8TF8myHaEgmSNMZaQ3Ypu8M
+# AIzaSyAjQ-GAazK7FWjzCT1o92i77q6ZLlOzIxU
+# AIzaSyAzd2wmT2Drdw3mXJCqAlQgegQn8gpNrF0
+
 sub new {
     my ( $class, $params ) = @_;
     my $objectRef = {
-        API_KEY => 'AIzaSyAzd2wmT2Drdw3mXJCqAlQgegQn8gpNrF0'
+        API_KEY => 'AIzaSyC09vRj3Tls8TF8myHaEgmSNMZaQ3Ypu8M'
     };
     bless $objectRef, $class;
     return $objectRef;
@@ -30,6 +34,7 @@ sub search
 	# Search by name country 
 	$coordinates = $self->_getLoc($location) if $location;
 	my $searchResult = $self->_getPlaces($coordinates->{lat},$coordinates->{lng},$distance);
+	return [] if !$searchResult;
 	
 	my $total = ();
 	foreach(@$searchResult){	

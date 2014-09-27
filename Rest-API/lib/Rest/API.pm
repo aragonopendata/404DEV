@@ -2,9 +2,10 @@ package Rest::API;
 use Dancer ':syntax';
 
 use Encode;
-use JSON ();
+use JSON::XS;
 
-use Rest::Places; 
+use Rest::Places;
+use Rest::Social;
 use Data::Dumper;
 
 
@@ -17,9 +18,19 @@ any ['post','get'] => '/search/' => sub {
 
     my $placesApi = Rest::Places->new();
     $placesApi->init();
-    my $results = $placesApi->search($coordinates,$distance,$name);
+    my $results->{places} = $placesApi->search($coordinates,$distance,$name);
 
-    return to_json($results);
+    # API-SOCIAL-DATA BLOCK
+    my $types = {twitter => 1, instagram => 1};
+
+    foreach my $type (keys %{$types}){
+    	my $socialApi = Rest::Social->new({type => $type});
+    	$socialApi->init();
+    	$results->{$type} = $socialApi->process($coordinates,$distance/1000,$name);
+    }
+
+    return JSON::XS->new->encode($results);
 };
+
 
 true;
