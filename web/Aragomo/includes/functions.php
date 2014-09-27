@@ -175,7 +175,7 @@ function points_proximity($arr_points){
 function selectData($initialPoint, $dist, $pages){
 	$arr_data = array();
 	if(!isset($_GET['debug'])){
-	$url = "http://155.210.71.103:2000/search/?lat=".$initialPoint['lat']."&lng=".$initialPoint['lng']."&distance=".($dist*1000)."&nPages=".$pages;
+	$url = "http://localhost:3000/search/?lat=".$initialPoint['lat']."&lng=".$initialPoint['lng']."&distance=".($dist*1000)."&nPages=".$pages;
 
 	//open connection
 	$ch = curl_init();
