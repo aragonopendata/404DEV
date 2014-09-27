@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class MainActivity extends ActionBarActivity {
     double longitude;
     double latitude;
 	TextView txtLat,txtLon;
+	String serverUrl = "http://155.210.71.103/app/coords.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +46,12 @@ public class MainActivity extends ActionBarActivity {
 	    
 	    WebView myWebView = (WebView) findViewById(R.id.webview);
 
+	    WebSettings webSettings = myWebView.getSettings();
+	    webSettings.setJavaScriptEnabled(true);
+	    webSettings.setBuiltInZoomControls(true);
+	    
 	    myWebView.setWebViewClient(new Callback());  //HERE IS THE MAIN CHANGE
-	    myWebView.loadUrl("http://www.google.com");
+	    myWebView.loadUrl("http://155.210.71.103/app/coords.php");
 	    
         //refresh gps coordenates
 	    String filteredGPS; 
