@@ -1,5 +1,7 @@
 package com.dev404.aragomo;
 
+import java.text.DecimalFormat;
+
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.location.Location;
@@ -46,8 +48,11 @@ public class MainActivity extends ActionBarActivity {
 	    myWebView.loadUrl("http://www.google.com");
 	    
         //refresh gps coordenates
+	    String filteredGPS; 
+	    filteredGPS = "(" + (new DecimalFormat("##.##").format(latitude)) + "," + (new DecimalFormat("##.##").format(longitude)) + ")";
 	    txtLat = (TextView) findViewById(R.id.gps);
-	    txtLat.setText("Latitude:" + latitude + ", Longitude:" + longitude);
+	    //txtLat.setText("Latitude:" + latitude + ", Longitude:" + longitude);
+	    txtLat.setText(filteredGPS);
         	    
 	    
     }
@@ -94,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
 	    txtLat = (TextView) findViewById(R.id.gps);
 	    txtLat.setText("Latitude:" + latitude + ", Longitude:" + longitude);
 	}
-   
+   /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,5 +117,12 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
+    
+    private int getValue() {
+        int value=1;
+        //value = volume_bar.getProgress() + 1;
+        return value;
+    }    
+    
 }
