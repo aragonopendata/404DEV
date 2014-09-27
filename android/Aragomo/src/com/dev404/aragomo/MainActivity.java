@@ -10,17 +10,26 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
     double longitude;
     double latitude;
 	TextView txtLat,txtLon;
-	String serverUrl = "http://155.210.71.103/app/coords.php";
+	String serverUrl = "http://155.210.71.103/Aragomoapp/map.php";
+	String sendingUrl = serverUrl;
+	SeekBar km_bar;
+	boolean debug = true;
+	WebView myWebView;
+	//?lat=42.034553&lng=0.125476&distance=5000
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,22 +45,40 @@ public class MainActivity extends ActionBarActivity {
         //TODO: check if GPS is enabled or not
         // will crash if GPS is NOT enabled! 
 
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();         
+        if (debug)
+        {
+        	latitude = 41.65;
+        	longitude = -0.883333;
+        }
+        else
+        {
+        	longitude = location.getLongitude();
+        	latitude = location.getLatitude();
+        }
 
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         
-
+        //updating URL
+        sendingUrl += "?lat=" + latitude +"&lng" + longitude;
+        
+        //finding seekbar item
+        
+        km_bar = (SeekBar) findViewById(R.id.volume_bar);
+        
+        //updating URL
+        
+        sendingUrl += "&dist="+getValue();
+        
 	    //loading webview
 	    
-	    WebView myWebView = (WebView) findViewById(R.id.webview);
+	    myWebView = (WebView) findViewById(R.id.webview);
 
 	    WebSettings webSettings = myWebView.getSettings();
 	    webSettings.setJavaScriptEnabled(true);
 	    webSettings.setBuiltInZoomControls(true);
 	    
 	    myWebView.setWebViewClient(new Callback());  //HERE IS THE MAIN CHANGE
-	    myWebView.loadUrl("http://155.210.71.103/app/coords.php");
+
 	    
         //refresh gps coordenates
 	    String filteredGPS; 
@@ -60,6 +87,26 @@ public class MainActivity extends ActionBarActivity {
 	    //txtLat.setText("Latitude:" + latitude + ", Longitude:" + longitude);
 	    txtLat.setText(filteredGPS);
         	    
+        final Button loadMapButton = (Button) findViewById(R.id.loadMapButton);
+        loadMapButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	sendingUrl = serverUrl;
+                sendingUrl += "?lat=" + latitude +"&lng" + longitude;
+
+                sendingUrl += "&dist="+getValue();   
+                
+                if (debug)
+                {
+                    sendingUrl += "&debug";
+                }
+        	    myWebView.loadUrl(sendingUrl);
+                
+            	Toast.makeText(getApplicationContext(), sendingUrl, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+	    
 	    
     }
     
@@ -74,8 +121,16 @@ public class MainActivity extends ActionBarActivity {
     
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
+            if (debug)
+            {
+            	latitude = 41.65;
+            	longitude = -0.883333;
+            }
+            else
+            {
+            	longitude = location.getLongitude();
+            	latitude = location.getLatitude();
+            }
         }
 
 		@Override
@@ -127,7 +182,7 @@ public class MainActivity extends ActionBarActivity {
     
     private int getValue() {
         int value=1;
-        //value = volume_bar.getProgress() + 1;
+        value = km_bar.getProgress() + 1;
         return value;
     }    
     
