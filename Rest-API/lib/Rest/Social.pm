@@ -27,7 +27,7 @@ sub init {
 sub process {
 	my ($self, $coordinates , $distance , $maxPage ,$name ) = @_;
 
-	my $page = 1;
+	my $page = 0;
 	my $total = ();
 	while($page < $maxPage){
 		$self->_prepareQUery($coordinates, $distance, $page , $name);
@@ -72,9 +72,11 @@ sub _prepareQUery {
 sub _parseResult {
 	my ($self, $result) = @_;
 	
+	my $description = $result->{description};
 	# Avoid errors in json encode
 	$result->{author} =~ s/"//g if $result->{author};
-	$result->{description} =~ s/"//g if $result->{description};
+	$result->{description} =~ s/\"//g if $result->{description};
+	$result->{description} =~ s/\\n//g if $result->{description};
 	$result->{thumbnail} =~ s/"//g if $result->{thumbnail};
 	$result->{url} =~ s/"//g if $result->{url};
 
@@ -85,6 +87,8 @@ sub _parseResult {
 		$description =~ s/$word//;
 		push(@$hashtags,$word);
 	}
+
+	$result->{description} = '' if $self->{TYPE} eq 'flickr';
 
 	return {author => $result->{author}, lat => $result->{lat}, lng => $result->{lng}, description => $result->{description}, url => $result->{url}, thumbnail => $result->{thumbnail}, published_on => $result->{published_on} , hashtags => $hashtags};
 }
